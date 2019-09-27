@@ -186,22 +186,25 @@ Write-Host "Setting environment variables..."
 [System.Environment]::SetEnvironmentVariable('HADOOP_HOME', "C:\bin\hadoop", [System.EnvironmentVariableTarget]::User)
 [System.Environment]::SetEnvironmentVariable('SPARK_HOME', "C:\bin\spark\", [System.EnvironmentVariableTarget]::User)
 
-$answer = $null;
+$path = [Environment]::GetEnvironmentVariable("PATH","User")
+$pythonpath = [Environment]::GetEnvironmentVariable("PYTHONPATH")
+
+   $answer = $null;
 
 	while(@('y', 'n') -notcontains $answer) {
 		$answer = (Read-Host "Do you want to add conda to Windows path? [y/n]").ToLower();
 	}
-
+ 
 	if ($answer -eq 'y') {
-	  [System.Environment]::SetEnvironmentVariable('Path', $env:Path + ";C:\bin\maven\bin;C:\bin\spark\bin;C:\bin\hadoop\bin;$($minicondadir);$($minicondadir)\Scripts;$($minicondadir)\Library\bin", [System.EnvironmentVariableTarget]::User)
+	  [System.Environment]::SetEnvironmentVariable('Path', $path+";C:\bin\maven\bin;C:\bin\spark\bin;C:\bin\hadoop\bin;$($minicondadir);$($minicondadir)\Scripts;$($minicondadir)\Library\bin", [System.EnvironmentVariableTarget]::User)
 	}
 	else{
-	  [System.Environment]::SetEnvironmentVariable('Path', $env:Path + ";C:\bin\maven\bin;C:\bin\spark\bin;C:\bin\hadoop\bin", [System.EnvironmentVariableTarget]::User)
+	  [System.Environment]::SetEnvironmentVariable('Path', $path+";C:\bin\maven\bin;C:\bin\spark\bin;C:\bin\hadoop\bin", [System.EnvironmentVariableTarget]::User)
 	}
 
 [System.Environment]::SetEnvironmentVariable('PYSPARK_LIBS', "C:\bin\spark\python\lib\pyspark.zip", [System.EnvironmentVariableTarget]::User)
 [System.Environment]::SetEnvironmentVariable('PYSPARK_PYTHON',"$($minicondadir)\envs\sparkenv\python.exe", [System.EnvironmentVariableTarget]::User)
-[System.Environment]::SetEnvironmentVariable('PYTHONPATH' ,"%SPARK_HOME%\python;%SPARK_HOME%\python\lib\py4j-0.10.7-src.zip:%PYTHONPATH%", [System.EnvironmentVariableTarget]::User)
+[System.Environment]::SetEnvironmentVariable('PYTHONPATH' ,"C:\bin\spark\python;C:\bin\spark\python\lib\py4j-0.10.7-src.zip;"+$pythonpath, [System.EnvironmentVariableTarget]::User)
 Write-Host "Settings are complete." -ForegroundColor Green
 
 }
