@@ -2,7 +2,8 @@
 This repository contains a powershell script to install Apache Spark on Windows 10 automatically.
 The goal is to create an environment on a personal computer for developing and testing routines for processing large-scale data using Spark. 
 However, spark will use only the number of cores of your pc, so you will not have the distributed computing capabilities presented in cloud systems like Microsoft Azure, AWS, etc...
-Thus, I don't recommend using it for a production environment.
+
+I don't recommend using it for a production environment.
 
 
 ## Programs that will be installed:
